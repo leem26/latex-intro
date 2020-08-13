@@ -1,0 +1,78 @@
+\documentclass[11pt]{article}
+\usepackage[]{style}
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+
+\geometry{letterpaper, portrait, margin=1in}
+
+\pagestyle{fancy}
+\rhead{A guide to \LaTeX}
+
+\title{\vspace{2cm} \textbf{A Guide to} \LaTeX \textbf{ and Sweave}}
+\author{}
+\date{\vspace{-2cm}}
+
+
+%% box S/R output
+\DefineVerbatimEnvironment{Sinput}{Verbatim}{xleftmargin=2em,
+                                              frame=single}
+\DefineVerbatimEnvironment{Soutput}{Verbatim}{xleftmargin=2em,
+                                             frame=single}
+
+\begin{document}
+
+
+
+\maketitle
+
+\begin{center}
+\Large Population Health Science, Last updated: \today
+
+\large Matt Lee, mlee8@g.harvard.edu
+\end{center}
+
+\vspace{6em}
+
+<<Options, echo=FALSE, cache=TRUE>>=
+options(width=90, tidy="true", size='small')
+@
+
+<<echo=FALSE, message=FALSE, warning=FALSE>>=
+library(ggplot2)
+library(dplyr)
+library(reshape2)
+library(ggsci)
+@
+
+\tableofcontents
+
+\pagebreak
+
+\section{Overview}
+
+This document provides some basic guidelines for getting up and running with \LaTeX on your computer, with a specific emphasis of integrating with \texttt{R} Sweave. It is by no means all-inclusive, and the world of typesetting is quite large. Here, we'll illustrate some of the most common scenarios you might encounter when using \LaTeX for your reports, presentations, etc. 
+
+\textbf{A note}: there is a whole related world of using markdown and/or \texttt{R} markdown syntax to typeset your documents. That material will not be presented here, since its use is excellently detailed by Yihui Xie.\footnote{https://bookdown.org/yihui/rmarkdown/} 
+
+The raw files for this guide are located at 
+
+\subsection{What is \LaTeX?}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
