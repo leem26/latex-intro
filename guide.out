@@ -1,2 +1,13 @@
 \BOOKMARK [1][-]{section.1}{Overview}{}% 1
 \BOOKMARK [2][-]{subsection.1.1}{What is LaTeX?}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{What is R Sweave?}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Reasons to use/not use LaTeX }{section.1}% 4
+\BOOKMARK [1][-]{section.2}{Getting started}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{Install TeX }{section.2}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Install knitr and create a new Sweave file in RStudio}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Structuring a Sweave/LaTeX File}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{The Preamble}{section.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Style files}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Other things I do in the preamble}{subsection.3.1}% 11
+\BOOKMARK [2][-]{subsection.3.2}{The Document Environment}{section.3}% 12
+\BOOKMARK [1][-]{section.4}{Including `R` code in your Sweave file}{}% 13

@@ -8,7 +8,7 @@
 \pagestyle{fancy}
 \rhead{A guide to \LaTeX}
 
-\title{\vspace{2cm} \textbf{A Guide to} \LaTeX \textbf{ and Sweave}}
+\title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}
 \author{}
 \date{\vspace{-2cm}}
 
@@ -26,9 +26,9 @@
 \maketitle
 
 \begin{center}
-\Large Population Health Science, Last updated: \today
+\Large{A basic overview}
 
-\large Matt Lee, mlee8@g.harvard.edu
+\large Matt Lee, mlee8@g.harvard.edu, \\ Last updated: \today
 \end{center}
 
 \vspace{6em}
@@ -48,25 +48,348 @@ library(ggsci)
 
 \pagebreak
 
+\newgeometry{letterpaper, portrait, left=0.75in, right=1.5in, top=1in, bottom=1in,
+  marginparsep = -9pt, marginparwidth = 80pt}
+
 \section{Overview}
 
-This document provides some basic guidelines for getting up and running with \LaTeX on your computer, with a specific emphasis of integrating with \texttt{R} Sweave. It is by no means all-inclusive, and the world of typesetting is quite large. Here, we'll illustrate some of the most common scenarios you might encounter when using \LaTeX for your reports, presentations, etc. 
+This document provides some basic guidelines for getting up and running with \LaTeX\ on your computer, with a specific emphasis of integrating with \texttt{R} Sweave. It is by no means all-inclusive, and the world of typesetting is quite large. Here, we'll illustrate some of the most common scenarios you might encounter when using \LaTeX\ for your reports, presentations, etc. For another great overview, check out \href{https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes}{this guide by Overleaf.}
 
 \textbf{A note}: there is a whole related world of using markdown and/or \texttt{R} markdown syntax to typeset your documents. That material will not be presented here, since its use is excellently detailed by Yihui Xie.\footnote{https://bookdown.org/yihui/rmarkdown/} 
 
-The raw files for this guide are located at 
+The raw files for this guide are located at \href{https://github.com/leem26/latex-intro}{this GitHub repository}.
 
 \subsection{What is \LaTeX?}
 
+\LaTeX (pronounced \textit{LAH-} or \textit{LAY-tek}) is a syntax language that is used to typeset documents. It's great for creating reports and presentations that look professional (even ``pretty''!), and is particularly useful when typesetting mathematical expressions. \LaTeX\ is also great for reproducibility, since there is a ``script'' file that documents how the output file (generally a .pdf) was created and styled. 
+
+\subsection{What is \texttt{R} Sweave?}
+
+Sweave is a system that allows us to integrate \texttt{R} code and ouput with \LaTeX\ typesetting. This has been particularly helpful for me for all of my homework assignments and working analysis documents, since I don't need to worry about remembering whether I've copied and pasted the most updated results into a word document. All I need to do is update my code (which is written directly into the Sweave .Rnw file) and re-compile it into my final PDF. 
+
+\subsection{Reasons to use/not use \LaTeX\ }
+
+\begin{itemize}
+  \item \textbf{pro: }\LaTeX\ and Sweave are flexible, incredibly powerful, and provide a certain aesthetic that may be appealing depending on your own preferences. 
+  \item \textbf{pro: }\LaTeX\ is the preferred method of typesetting used in any math-related field (e.g. biostatistics), so if you will be working in a related space it's probably worth it to learn.
+  \item \textbf{con: }\LaTeX\ can have a steep learning curve and sometimes takes longer relative to other word-processing software like Microsoft Word. 
+\end{itemize}
+
+\marginnote{\textit{In practice, my general workflow is to have a set template and style I can re-use for all of my homework assignments. This saves some time and prevents me from having to start from scratch every time. But YMMV and whatever works for you, works.}}[-7cm]
+
+\pagebreak
+\section{Getting started}
 
 
+\subsection{Install \TeX\ }
+
+\TeX\ is the programming foundation of \LaTeX. You will probably never have to interact with it directly. All of the commands and text you write in your .tex or .Rnw files get interpreted by \TeX, which handles the production of the final document. 
+
+There are many distributions of \TeX\ available, and you will need to download a version that works with your operating system (e.g. MacTeX for Mac OS and MiKTeX for Windows). You can look at the different options \href{https://www.latex-project.org/get/}{here} and follow the specific directions for each. This is generally the most comprehensive way of installing \TeX, and as a results can take quite a long time to download (e.g., MacTeX is roughly 4 Gb). 
+
+There is a separate option tailored for \texttt{R} users called \href{https://yihui.org/tinytex/}{TinyTeX} that doesn't include every \LaTeX\ package, but is significantly smaller in file size (150 Mb on Mac OS or 220 Mb on Windows). This might be useful if you only occasionally use \LaTeX\ or don't have a ton of storage space on your computer. 
 
 
+\subsection{Install \texttt{knitr} and create a new Sweave file in RStudio}
+
+\texttt{knitr}\footnote{https://yihui.org/knitr/} is an \texttt{R} package that can be used to ``weave'' or compile your Sweave .Rnw files. To install:
+
+\begin{enumerate}
+\item Open RStudio, and type \texttt{install.packages('knitr')} into the console window. 
+  \begin{figure}[H]
+    \centering 
+    \includegraphics[width = 0.85\textwidth]{img/installknitr}
+  \end{figure}
+\item Create your first Sweave document! In Rstudio, go to File $\rightarrow$ New File $\rightarrow$ R Sweave
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width = 0.9 \textwidth]{img/newsweave}
+  \end{figure}
+\item Save your Sweave file, using command/ctrl + s or  File $\rightarrow$ Save. You'll notice that when you go to this file in your directory, it has the extension .Rnw. This is the extension for all Sweave files. (.Rmd is for R markdown, .R is for pure R scripts). 
+\item Your Sweave file should look fairly empty, type in a message in between the \Verb#\begin{document}# and \Verb#\end{document}# tags, like below. Delete the \Verb#\SweaveOpts{concordance=TRUE}# line (this is only used when we knit using Sweave. In this case, we will knit using \texttt{knitr}). To tell RStudio that we would like to knit using \texttt{knitr}, we also need to include the line \verb# % !Rnw weave = knitr# at the very beginning. Our file should look like:
+
+\begin{Verbatim}[frame=single]
+% !Rnw weave = knitr
+\documentclass{article}
+
+\begin{document}
+
+Hello this is a new sweave document!
+
+\end{document}
+\end{Verbatim}
+\item Click ``Compile PDF'' or hit command/ctrl + shift + k on your keyboard to compile your document and output it into a PDF file. You should get a pop-up that looks something like:
+
+  \begin{figure}[H]
+    \centering 
+    \includegraphics[width = 0.8\textwidth]{img/testpdf}
+  \end{figure}
+
+\end{enumerate}
+
+Doesn't look that great, but we will follow this baseic procedure as we add to our Sweave file! You can also access some preferences for Sweave documents, like whether to preview the document after each compile, the default weave system (Sweave or knitr), and the default \LaTeX program to use to generate the PDF file, by going to Rstudio $\rightarrow$ Preferences $\rightarrow$ Sweave.
+
+\pagebreak
+\section{Structuring a Sweave/\LaTeX\ File}
+
+\DefineShortVerb{\|}
+\SaveVerb{Verb1}|\documentclass{}|
+\SaveVerb{Verb2}|...|
+\SaveVerb{Verb3}|\begin{document}|
+\SaveVerb{Verb4}|\end{document}|
 
 
+\marginnote{\textit{The general structure of a \LaTeX\ file:}   \UseVerb{Verb1} \UseVerb{Verb2} \UseVerb{Verb3} \UseVerb{Verb2} \UseVerb{Verb4}}[0cm] Every Sweave file is basically a \LaTeX\ file with the added functionality of including \verb#R# commands. As such, we need to follow \LaTeX\ rules for structuring our document. Every Sweave file should have:
+
+\begin{itemize}
+\item A \textit{Preamble}
+\item A \textit{Document} environment
+\end{itemize}
+
+\subsection{The Preamble}
+
+The \textit{preamble} portion of a document is where we declare the \textbf{document class} as well as any global packages, functions, or options we want to use for our document. Let's take a look at an example that builds off of new Sweave file we created in the previous section:
+
+\begin{Verbatim}[frame=single]
+% !Rnw weave = knitr
+\documentclass{article}
+\usepackage[]{/Users/matthewlee/style}
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+\usepackage{geometry}
+
+\geometry{letterpaper, portrait, margin=1in}
+
+\pagestyle{fancy}
+\rhead{A guide to \LaTeX}
+
+\title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}
+
+\begin{document}
+
+\maketitle
+
+Hello this is a new sweave document!
 
 
+\end{document}
+\end{Verbatim}
 
+\pagebreak
+\marginnote{\textit{You can specify options before or after the argument, but I like to include them before for consistency.}}[1cm] We see that there's a whole bunch of lines that start with a backslash ``\textbackslash'' and end with some text enclosed in curly braces ``\{\}''. These are \textbf{functions (also called macros or commands)} in \LaTeX, where the function \textit{name} immediately follows the backslash, and function \textit{arguments} are enclosed in the brackets. \textbf{Options} for functions are enclosed by square brackets ``[]'', and can be omitted if you don't have any options to declare. 
+
+Functions come from the \LaTeX packages you've installed on your computer with your specific distribution (e.g. MacTeX, MiKTeX, TinyTeX), or can be defined manually using the \verb#\newcommand{}# function. 
+
+The preamble of our Sweave file is anything that comes before the \verb$\begin{document}$ command. In the example above, our preamble is:
+
+\begin{Verbatim}[frame=single]
+% !Rnw weave = knitr
+\documentclass{article}
+\usepackage[]{/Users/matthewlee/style}
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+\usepackage{geometry}
+
+\geometry{letterpaper, portrait, margin=1in}
+
+\pagestyle{fancy}
+\rhead{A guide to \LaTeX}
+
+\title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}
+\end{Verbatim}
+
+The \textbf{document class} function at the very top, \verb#\documentclass{}# tells \TeX\ what standard layout to use for the output. There are a variety of arguments available, but the most common are ``article'', ``report'', ``book'', or ``beamer'' (for presentations). For homework assignments, I generally use the ``article'' document class and customize using different packages and options. \verb#\documentclass{}# has several options including font size, paper size and columns. For example, the command below:
+
+\begin{center}
+\begin{BVerbatim}
+\documentclass[11pt, letterpaper, twocolumn]{article}
+\end{BVerbatim}
+\end{center}
+
+Sets the font size to 11pt, the output to letter paper size (8.5in x 11in), and splits the document into two columns. Another way to do this is with the \texttt{geometry} package's \verb#\geometry{}# command. In the example above, I've set my formatting to letter paper, portrait orientation, and 1-inch margins with the following line:
+
+\begin{center}
+\begin{BVerbatim}
+\geometry{letterpaper, portrait, margin=1in}
+\end{BVerbatim}
+\end{center}
+
+In order to use this command, however, I need to tell \TeX\ to load the package that it belongs to. This is another component of the \textbf{preamble}. Before I call \verb#\geometry{}#, I use the \verb#\usepackage{}# command to to load the \texttt{geometry} package:
+
+\begin{center}
+\begin{BVerbatim}
+\usepackage{geometry}
+\end{BVerbatim}
+\end{center}
+
+\subsubsection{Style files}
+
+If there are many packages you need to load, it is sometimes convenient to include them in a separate ``style'' file. This is a text file with the extension \textbf{.sty} that we call in our main document in order to load all the packages contained in our style file. In our example, I actually do this using the command:
+
+\begin{center}
+\begin{BVerbatim}
+\usepackage[]{/Users/matthewlee/style}
+\end{BVerbatim}
+\end{center}
+
+An excerpt from the actual style file, ``style.sty'' looks like:
+\marginnote{\textit{I save my full style.sty file (which contains packages and settings relevant to creating articles and reports) in my home directory and reference it most times I write up an assignment. In cases where I need something specific, I'll create a custom style.sty file and place it in the same folder that my .Rnw file is located}}[-3cm]
+
+\begin{Verbatim}[frame=single]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% TEXT/PAGE FORMATTING PACKAGES
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+  \setlength{\headheight}{12pt}
+\usepackage{float}
+\usepackage{parskip}
+  \parskip=8pt %% set parskip to 8pt
+\usepackage[bottom]{footmisc}
+\usepackage{changepage}
+\usepackage{rotating}
+\usepackage{fancyvrb}
+\usepackage{lscape}
+  \allowdisplaybreaks
+\usepackage{marginnote}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% FIGURES
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% TABLES
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{cellspace, boldline}
+  \setlength\cellspacetoplimit{5pt}
+  \setlength\cellspacebottomlimit{2pt}
+\usepackage{threeparttable, tablefootnote}
+\usepackage{booktabs}
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
+\usepackage{longtable}
+\usepackage[export]{adjustbox}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{makecell} 
+\usepackage{tabularx}
+
+%% Define column with grey background fill
+\definecolor{Gray}{gray}{0.85}
+\newcolumntype{a}{>{\columncolor{Gray}}C}
+\end{Verbatim}
+
+This just saves some space and makes reading the Sweave files a bit easier. However, you do have to be careful about package \textbf{conflicts}, which can occur if you load two packages that aren't compatible with each other. When you try to knit your file in these cases, you'll get an error. I've found that this is most common with packages related to references and bibliography settings.
+
+
+\subsubsection{Other things I do in the preamble}
+
+In our example preamble, there are few other commands I use that help set up the layout of the document. 
+
+\begin{itemize}
+\item \verb#\pagestyle{fancy}#: Sets the page style to ``fancy'' (draws horizontal line separating the header from the main text, and lists the current section on the left side of the header) from the \texttt{fancyhdr} pacakge.
+\item \verb#\rhead{A guide to \LaTeX}#: Specifies that the right side header should include the text: ``A guide to \LaTeX''
+\item \verb#\title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}#: Sets the title to \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}
+\end{itemize}
+
+\subsection{The Document Environment}
+
+The document environment consists of all the text in between \verb#\begin{document}# and \verb#\end{document}#, and contains all of the actual content that you want to print to the output PDF file. In our example, the document environment consists of a title and a single line of content:
+
+
+\begin{Verbatim}[frame=single]
+\begin{document}
+
+\maketitle 
+
+Hello this is a new sweave document!
+
+\end{document}
+\end{Verbatim}
+
+Note that the \verb#\maketitle# command can also print out values for ``author'' and ``date'' if you define them in your preamble (i.e. using \verb#\author{}# and \verb#\date{}#). Let's look at what our example looks like as a PDF. I've included some random example text and math just to illustrate how things appear for multiple pages:
+
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width = \textwidth]{img/test2page}
+\end{figure}
+
+\section{Including `R` code in your Sweave file}
+
+To include \texttt{R} code in your document, we need to tell Sweave how to recognize code vs. actual text. For Sweave, this is given by the syntax:
+
+
+\verb#            <<>>=#
+
+\begin{BVerbatim}[frame=single]
+            # Here is some R code
+
+            x <- rnorm(n = 100, mean = 25, sd = 3)
+            hist(x)
+\end{BVerbatim}
+
+\verb#            @#
+
+Where we enclose all of our \texttt{R} code inside the ``\texttt{<<>>=}'' and ``\texttt{@}'' symbols. In RStudio, the shortcut to insert these symbols automatically is \textbf{command/control + alt + i}. The code chunk above, when evaluated, looks like:
+
+<<tidy='true', size='small', fig.height=5, fig.width=8.5, echo=TRUE, cache=TRUE, cache.lazy=FALSE>>=
+x <- rnorm(n = 100, mean = 25, sd = 3)
+hist(x, breaks = 20)
+@
+
+We can also specify options for our code output by specifying them in between the double left and right inequality signs. For example: 
+
+\verb#            <<size='small', fig.height=3, fig.width=8.5, echo=TRUE, cache=TRUE>>=#
+
+\begin{BVerbatim}[frame=single]
+            # Here is some R code
+
+            x <- rnorm(n = 100, mean = 25, sd = 3)
+            hist(x)
+\end{BVerbatim}
+
+\verb#            @#
+
+
+Specifies that we want our code font size to be ``small'', figure heights to be 3 inches, figure widths to be 8.5 inches, our code to be ``echo''d (i.e. repeated back to us rather than hidden), and our objects to be cached. With these new options, our code chunk looks like:
+
+<<tidy='true', size='small', fig.height=3, fig.width=8.5, echo=TRUE, cache=TRUE, cache.lazy=FALSE>>=
+x <- rnorm(n = 100, mean = 25, sd = 3)
+hist(x, breaks = 20)
+@
+
+\marginnote{\textit{Why \texttt{Sexpr}? Because the \texttt{S} programming language was the precursor to what we now know as \texttt{R}. \texttt{Sexpr} stands for ``\texttt{S} expression''}}
+If we want to include \texttt{R} output within a line, for example as part of a results paragraph, we can use the command \verb#\Sexpr{}# where we place whatever \texttt{R} command we want to include inside the curly braces. Let's say we want to report the mean value of x, rounded to two decimal places. We would have:
+
+\begin{center}
+The mean of x is \verb#\Sexpr#\texttt{\{round(mean(x),2)\}}
+\end{center}
+
+Show up as:
+
+\begin{center}
+The mean of x is \Sexpr{round(mean(x), 2)}
+\end{center}
+
+We can also use additional \texttt{R} packages with Sweave, just like with R Markdown:
+
+<<tidy='true', size='small', fig.height=4, fig.width=8.5, echo=TRUE, cache=TRUE, cache.lazy=FALSE>>=
+library(ggplot2)
+x <- as.data.frame(x)
+ggplot(x) + 
+  geom_bar(aes(x = x), stat = "density") + 
+  theme_bw()
+@
 
 
 
