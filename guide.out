@@ -8,6 +8,17 @@
 \BOOKMARK [1][-]{section.3}{Structuring a Sweave/LaTeX File}{}% 8
 \BOOKMARK [2][-]{subsection.3.1}{The Preamble}{section.3}% 9
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Style files}{subsection.3.1}% 10
-\BOOKMARK [3][-]{subsubsection.3.1.2}{Other things I do in the preamble}{subsection.3.1}% 11
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Other things I often do in the preamble}{subsection.3.1}% 11
 \BOOKMARK [2][-]{subsection.3.2}{The Document Environment}{section.3}% 12
-\BOOKMARK [1][-]{section.4}{Including `R` code in your Sweave file}{}% 13
+\BOOKMARK [1][-]{section.4}{Including R code in your Sweave file}{}% 13
+\BOOKMARK [1][-]{section.5}{Typesetting math expressions}{}% 14
+\BOOKMARK [2][-]{subsection.5.1}{Inline mode}{section.5}% 15
+\BOOKMARK [2][-]{subsection.5.2}{Display mode}{section.5}% 16
+\BOOKMARK [2][-]{subsection.5.3}{Common math expressions for PHS 2000 and beyond}{section.5}% 17
+\BOOKMARK [3][-]{subsubsection.5.3.1}{For regression equations}{subsection.5.3}% 18
+\BOOKMARK [3][-]{subsubsection.5.3.2}{For probability distributions, likelihood functions, etc}{subsection.5.3}% 19
+\BOOKMARK [1][-]{section.6}{Tables and figures}{}% 20
+\BOOKMARK [2][-]{subsection.6.1}{Tables}{section.6}% 21
+\BOOKMARK [2][-]{subsection.6.2}{Figures}{section.6}% 22
+\BOOKMARK [1][-]{section.7}{Lists}{}% 23
+\BOOKMARK [1][-]{section.8}{Overleaf}{}% 24

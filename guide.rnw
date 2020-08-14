@@ -6,7 +6,7 @@
 \geometry{letterpaper, portrait, margin=1in}
 
 \pagestyle{fancy}
-\rhead{A guide to \LaTeX}
+\rhead{Casual \LaTeX}
 
 \title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}
 \author{}
@@ -26,12 +26,12 @@
 \maketitle
 
 \begin{center}
-\Large{A basic overview}
+\Large{A casual overview}
 
 \large Matt Lee, mlee8@g.harvard.edu, \\ Last updated: \today
 \end{center}
 
-\vspace{6em}
+\vspace{1em}
 
 <<Options, echo=FALSE, cache=TRUE>>=
 options(width=90, tidy="true", size='small')
@@ -55,9 +55,11 @@ library(ggsci)
 
 This document provides some basic guidelines for getting up and running with \LaTeX\ on your computer, with a specific emphasis of integrating with \texttt{R} Sweave. It is by no means all-inclusive, and the world of typesetting is quite large. Here, we'll illustrate some of the most common scenarios you might encounter when using \LaTeX\ for your reports, presentations, etc. For another great overview, check out \href{https://www.overleaf.com/learn/latex/Learn_LaTeX_in_30_minutes}{this guide by Overleaf.}
 
-\textbf{A note}: there is a whole related world of using markdown and/or \texttt{R} markdown syntax to typeset your documents. That material will not be presented here, since its use is excellently detailed by Yihui Xie.\footnote{https://bookdown.org/yihui/rmarkdown/} 
+\textbf{A note}: There is a whole related world of using markdown and/or \texttt{R} markdown syntax to typeset your documents. That material will not be presented here, since its use is excellently detailed by Yihui Xie.\footnote{https://bookdown.org/yihui/rmarkdown/} 
 
-The raw files for this guide are located at \href{https://github.com/leem26/latex-intro}{this GitHub repository}.
+\textbf{A disclaimer}: Proficiency in \LaTeX\ is a lifelong journey, and this document should certainly not be used as a definitive guide to best practices. This is just a semi-structured write up of how \textbf{I} use Sweave and \LaTeX\ in my own workflow, and should probably be read with a grain of salt. 
+
+The raw files for this guide are located at \href{https://github.com/leem26/latex-intro}{this GitHub repository}. I've also included the actual homework template I use for my classes, so feel free to use that as a starting place if desired. 
 
 \subsection{What is \LaTeX?}
 
@@ -145,6 +147,8 @@ Doesn't look that great, but we will follow this baseic procedure as we add to o
 \item A \textit{Preamble}
 \item A \textit{Document} environment
 \end{itemize}
+
+To comment out text, include the ``\%'' symbol at the front of the comment. 
 
 \subsection{The Preamble}
 
@@ -292,7 +296,7 @@ An excerpt from the actual style file, ``style.sty'' looks like:
 This just saves some space and makes reading the Sweave files a bit easier. However, you do have to be careful about package \textbf{conflicts}, which can occur if you load two packages that aren't compatible with each other. When you try to knit your file in these cases, you'll get an error. I've found that this is most common with packages related to references and bibliography settings.
 
 
-\subsubsection{Other things I do in the preamble}
+\subsubsection{Other things I often do in the preamble}
 
 In our example preamble, there are few other commands I use that help set up the layout of the document. 
 
@@ -324,7 +328,7 @@ Note that the \verb#\maketitle# command can also print out values for ``author''
     \includegraphics[width = \textwidth]{img/test2page}
 \end{figure}
 
-\section{Including `R` code in your Sweave file}
+\section{Including R code in your Sweave file}
 
 To include \texttt{R} code in your document, we need to tell Sweave how to recognize code vs. actual text. For Sweave, this is given by the syntax:
 
@@ -392,10 +396,531 @@ ggplot(x) +
 @
 
 
+\section{Typesetting math expressions}
+
+If you're typsetting anything with math, it's usually prudent to load the following packages either in your preamble or a separate style file:
+
+\begin{itemize}
+\item \verb#\usepackage{amsmath}#
+\item \verb#\usepackage{mathtools}#
+\item \verb#\usepackage{amsfonts}#
+\item \verb#\usepackage{hyperref}#
+\end{itemize}
+
+\subsection{Inline mode} 
+
+There are a number of ways to include math expressions in Sweave/\LaTeX. To include an expression ``inline'', i.e. in the line that you are writing in, surround the expression in single dollar signs (\$...\$). 
+
+For example, ``\verb#$E(Y \mid X) = \beta_0 + \beta_1 X$# is a regression model'' will be typset as ``$E(Y \mid X) = \beta_0 + \beta_1 X$ is a regression model''
+
+\subsection{Display mode}
+
+To typeset expressions in ``display mode'', i.e. expressions on separate lines, our options become a bit more diverse. The most common options are:
 
 
+For quick, centered, single expressions: enclose the expression in double dollar signs or backslash-brackets (i.e. \$\$...\$\$ or \verb#\[...\]#)\footnote{https://tex.stackexchange.com/questions/503/why-is-preferable-to}. \marginnote{\textit{I've never really noticed a big difference between using double-dollar signs or backlash-brackets, but people online seem to prefer the latter due to spacing issues.}}[-0.5cm]
+
+For example: 
+
+\begin{center}
+\begin{Verbatim}[frame=single]
+$$E(Y \mid X) = \beta_0 + \beta_1 X$$
+
+\[E(Y \mid X) = \beta_0 + \beta_1 X\]
+\end{Verbatim}
+\end{center}
+
+will render as:
+
+$$E(Y \mid X) = \beta_0 + \beta_1 X$$
+\[E(Y \mid X) = \beta_0 + \beta_1 X\]
 
 
+For equations that are long and need to be split into multiple lines, or multiple equations that need to be aligned, we can use environments from the \verb#amsmath# package. 
+
+\begin{itemize}
+\item If you want to write a single equation on a single line, you can use the options from above \textbf{or} use the \texttt{equation} environment if you want to ``tag'' the equation with a number. When you tag equations, \LaTeX\ will keep track of them for you and allow you to reference them if you specify a label using the \verb#\label{}# command. 
+
+For example: 
+
+\begin{Verbatim}[frame=single]
+\begin{equation}
+\label{myequation}
+E(Y \mid X) = \beta_0 + \beta_1 X
+\end{equation} 
+\end{Verbatim}
+
+Will get rendered as:
+
+\begin{equation}
+\label{myequation}
+E(Y \mid X) = \beta_0 + \beta_1 X
+\end{equation} 
+
+And we can reference this automatically, i.e. \verb#\autoref{myequation}# (from the \texttt{hyperref} package) appears as \autoref{myequation}.
+
+\item If we have a single expression that needs to be split across multiple lines, we can use the \texttt{split} environment \textbf{inside} the \texttt{equation} environment. To separate lines, use a double backslash ``\verb#\\#'' at the end of each line. To align lines, include an ampersand right before the position you want to align by. For example, the command below will align the two lines by the ``='' signs. 
+
+\begin{Verbatim}[frame=single]
+\begin{equation}
+\begin{split}
+\label{myequation2}
+E(Y \mid X) &= \beta_0 + \beta_1 X \\
+E(Y \mid W) &= \alpha_0 + \alpha_1 W
+\end{split}
+\end{equation} 
+\end{Verbatim}
+
+Will be rendered as:
+
+\begin{equation}
+\begin{split}
+\label{myequation2}
+E(Y \mid X) &= \beta_0 + \beta_1 X \\
+E(Y \mid W) &= \alpha_0 + \alpha_1 W
+\end{split}
+\end{equation} 
+
+\item If we have a long expression that needs to be split across multiple lines, but we don't care about aligning them, we can use the \texttt{multline} environment, which will align the first line to the left and the second to the right. Again, use a double backslash to separate lines. For example:
+
+\begin{Verbatim}[frame=single]
+\begin{multline}
+E(Y \mid X, W, L) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 \\
++ \alpha_0 + \alpha_1 W_1 + \alpha_2 W_2 + \alpha_3 W_3 + \alpha_4 W_4
++ \delta_0 + \delta_1 L_1 + \delta_2 L_2 + \delta_3 L_3 + \delta_4 L_4
+\end{multline}
+\end{Verbatim}
+
+Will be rendered as: 
+\begin{multline}
+E(Y \mid X, W, L) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_3 X_3 \\
++ \alpha_0 + \alpha_1 W_1 + \alpha_2 W_2 + \alpha_3 W_3 + \alpha_4 W_4
++ \delta_0 + \delta_1 L_1 + \delta_2 L_2 + \delta_3 L_3 + \delta_4 L_4
+\end{multline}
+
+\item If we have multiple equations (and we want to tag both separately), we can use the \verb#align# environment. Again, separate lines with double backslashes and align using ampersands:
+
+\begin{Verbatim}[frame=single]
+\begin{align}
+E(Y \mid X) &= \beta_0 + \beta_1 X \\
+E(Y \mid W) &= \alpha_0 + \alpha_1 W
+\end{align} 
+\end{Verbatim}
+
+\begin{align}
+E(Y \mid X) &= \beta_0 + \beta_1 X \\
+E(Y \mid W) &= \alpha_0 + \alpha_1 W
+\end{align}
+
+
+\item If we want to have multiple equations, but don't care about alignment, we can use the \verb#gather# environment:
+
+\begin{Verbatim}[frame=single]
+\begin{gather}
+E(Y \mid X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 \\
+E(Y \mid W) = \alpha_0 + \alpha_1 W
+\end{gather} 
+\end{Verbatim}
+
+\begin{gather}
+E(Y \mid X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 \\
+E(Y \mid W) = \alpha_0 + \alpha_1 W
+\end{gather} 
+
+\end{itemize}
+
+
+For any environment where we don't want to tag the equation, we can add the ``*'' symbol to the command name. For example:
+
+\begin{Verbatim}[frame=single]
+\begin{gather*}
+E(Y \mid X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 \\
+E(Y \mid W) = \alpha_0 + \alpha_1 W
+\end{gather*} 
+\end{Verbatim}
+
+\begin{gather*}
+E(Y \mid X) = \beta_0 + \beta_1 X_1 + \beta_2 X_2 \\
+E(Y \mid W) = \alpha_0 + \alpha_1 W
+\end{gather*} 
+
+
+\subsection{Common math expressions for PHS 2000 and beyond}
+
+
+\subsubsection{For regression equations}
+
+\textbf{Greek letters}: 
+
+\begin{Verbatim}[frame=single]
+\[
+\alpha , \beta , \delta ,  \varepsilon , \gamma , \psi , \Psi, \Sigma , \gamma 
+\]
+\end{Verbatim}
+
+\[
+\alpha , \beta , \delta , \varepsilon ,  \gamma , \psi , \Psi, \Sigma , \gamma 
+\]
+
+To get bold math symbols, use the \verb#\bm{}# command from the \verb#bm# package:
+
+\begin{Verbatim}[frame=single]
+\[
+\bm{\alpha} , \bm{\beta} , \bm{\delta} ,  \bm{\varepsilon}
+\]
+\end{Verbatim}
+
+\[
+\bm{\alpha} , \bm{\beta} , \bm{\delta} ,  \bm{\varepsilon}
+\]
+
+\textbf{Subscripts, superscripts}: Use ``\_'' for subscripts, and ``\^'' for superscripts. If you have more than one symbol that should go in the sub or super-script, enclose them in curly braces ``\{\}'' so \LaTeX\ recognizes it as a group.
+
+\begin{Verbatim}[frame=single]
+\[
+\beta_1 , \beta_0 , \beta_{0, 1, 2, 3} , X^2 , X^{2x} , \sum_{i=1}^{N=n}
+\]
+\end{Verbatim}
+
+\[
+\beta_1 \ \ , \ \ \beta_0 \ \ , \ \ \beta_{0, 1, 2, 3} \ \ , \ \ X^2 , \ \ X^{2x} \ \ , \ \ \sum_{i=1}^{N=n}
+\]
+
+\textbf{Other notation related to regression equations}
+
+To get the ``conditional'' symbol, use the \verb#\mid# command:
+
+\begin{Verbatim}[frame=single]
+\[
+E(Y \mid X)
+\]
+\end{Verbatim}
+
+\[
+E(Y \mid X)
+\]
+
+To represent a regression equation as a sum of $p$ linear predictors, use the \verb#\sum# command:
+
+
+\begin{Verbatim}[frame=single]
+\[
+E(Y \mid X) = \beta_0 + \sum_{i=1}^p X_i \beta_i
+\]
+\end{Verbatim}
+
+\[
+E(Y \mid X) = \beta_0 + \sum_{i=1}^p X_i \beta_i
+\]
+
+To represent a regression equation using matrix bold math and text, use the \verb#\textbf{}# command for any regular letter and \verb#\bm{}# command for any bold math symbol:
+
+\begin{Verbatim}[frame=single]
+\[
+E(Y \mid X) = \textbf{X} \bm{\beta}
+\]
+\end{Verbatim}
+
+\[
+E(Y \mid X) = \textbf{X} \bm{\beta}
+\]
+
+To include other text in a math equation, use the \verb#\text{}# command inside the math environment:
+
+\begin{Verbatim}[frame=single]
+\[
+\text{logit}(\pi(x)) = \textbf{X} \bm{\beta}
+\]
+\end{Verbatim}
+
+\[
+\text{logit}(\pi(x)) = \textbf{X} \bm{\beta}
+\]
+
+Note that \LaTeX\ recognizes \verb#\log# and \verb#\exp#, so you don't need to write out \verb#\text{log}#. 
+
+\begin{Verbatim}[frame=single]
+\begin{gather*}
+\log(\pi(x)) = \textbf{X} \bm{\beta} \\
+\pi(x) = \exp(\textbf{X} \bm{\beta})
+\end{gather*}
+\end{Verbatim}
+
+\begin{gather*}
+\log(\pi(x)) = \textbf{X} \bm{\beta} \\
+\pi(x) = \exp(\textbf{X} \bm{\beta})
+\end{gather*}
+
+
+Bracket matrices can be written using the \verb#bmatrix# environment, which needs to be placed \textbf{inside} a math environment. Separate rows with ``\verb#\\#'' and columns with ``\&''. We can also subscript or superscript matrices like any other object. 
+
+\begin{Verbatim}[frame=single]
+\[
+\begin{bmatrix}
+ 1 & 2 & 3 \\
+ 4 & 5 & 6 \\
+ 7 & 8 & 9
+\end{bmatrix}_{(3 \times 3)}  
+\]
+\end{Verbatim}
+
+\[
+\begin{bmatrix}
+ 1 & 2 & 3 \\
+ 4 & 5 & 6 \\
+ 7 & 8 & 9
+\end{bmatrix}_{(3 \times 3)}  
+\]
+
+Parenthetical matrices can be written similarly, using the \verb#pmatrix# environment.
+
+\begin{Verbatim}[frame=single]
+\[
+\begin{pmatrix}
+ 1 & 2 & 3 \\
+ 4 & 5 & 6 \\
+ 7 & 8 & 9
+\end{pmatrix}  
+\]
+\end{Verbatim}
+
+\[
+\begin{pmatrix}
+ 1 & 2 & 3 \\
+ 4 & 5 & 6 \\
+ 7 & 8 & 9
+\end{pmatrix}
+\]
+
+\subsubsection{For probability distributions, likelihood functions, etc}
+
+For fractions, use the \verb#\frac{}{}# command. The numerator goes in the first set of curly braces, and the denominator goes in the second:
+
+\begin{Verbatim}[frame=single]
+\[
+\frac{\exp(x)}{1 + \exp(x)}
+\]
+\end{Verbatim}
+
+\[
+\frac{\exp(x)}{1 + \exp(x)}
+\]
+
+For products (e.g. for the joint likelihood), use the \verb#\prod# command:
+
+\begin{Verbatim}[frame=single]
+\[
+L(\lambda; x) = \prod_{i=1}^n \frac{\lambda^{x_i} e^{-\lambda}}{x_i!}  
+\]
+\end{Verbatim}
+
+\[
+L(\lambda; x) = \prod_{i=1}^n \frac{\lambda^{x_i} e^{-\lambda}}{x_i!}  
+\]
+
+For sums (e.g. for the joint \textit{log} likelihood), use the \verb#\sum# command. Calligraphic ``l'' can be written using the \verb#\ell# command. 
+
+\begin{Verbatim}[frame=single]
+\[
+\ell (\lambda; x) = -n \lambda - \sum_{i=1}^n \log(x_i!) 
+                    + \log(\lambda) \sum_{i=1}^n x_i
+\]
+\end{Verbatim}
+
+\[
+\ell (\lambda; x) = -n \lambda - \sum_{i=1}^n \log(x_i!) + \log(\lambda) \sum_{i=1}^n x_i
+\]
+
+Integrals can be written using the \verb#\int# command:
+
+\begin{Verbatim}[frame=single]
+\[
+\int_{x=1}^{x=25} f(x) dx
+\]
+\end{Verbatim}
+
+\[
+\int_{x=1}^{x=25} f(x) dx
+\]
+
+
+\section{Tables and figures}
+
+\subsection{Tables}
+
+There are many ways to typeset tables. Here, we present one method using the \verb#tabular# environment. To start a table, place a \verb#tabular# environment inside a \verb#table# environment, which allows \LaTeX\ to keep track of tables in your document. Within the \verb#table# environment, you can also specify a label and caption, as well as horizontal alignment. 
+
+To specify where the table appears on the page, pass the \textit{placement specifier} option to \verb#\begin{table}#. For example, \verb#\begin{table}[t]# places the table at the top of the page, \verb#\begin{table}[b]# places the table at the bottom, \verb#\begin{table}[h]# places the table \textbf{approximately} where you've written the table, and \verb#\begin{table}[H]# places the table \textbf{exactly} where you've written the table. \marginnote{\textit{In most cases, I use the ``H'' option for table positioning, since I generally want my tables to appear directly next to the relevent text.}}[-1cm]
+
+Within the \verb#table# environment, the actual contents of your table will go in the \verb#tabular# environment. Column alignment is specified in a second set of curly braces directly following the \verb#\begin{tabular}# command, and you must specify ``l'' (left), ``r'' (right), or ``c'' (centered) for each column in your table. In the \verb#tabular# environment, separate rows with \verb#\\# and columns with ``\&''. 
+
+I like to have horizontal borders in my tables by using the \verb#\toprule#, \verb#midrule#, and \verb#bottomrule# commands from the \verb#booktabs# package (i.e. \verb#\usepackage{booktabs}#), but there are many alternatives out there you can explore. 
+
+\begin{Verbatim}[frame=single]
+\begin{table}[H]
+\centering % sets horizontal alignment to ``centered''
+\label{tab:mytable1}
+\caption{My Table}
+\begin{tabular}{lcc} % ``lcc'' specifies left for col1, center for cols 2/3
+  \toprule % toprule for very top of table
+  left aligned & center & center \\
+  \midrule % midrule following table headers
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
+  \bottomrule % bottomrule for very bottom of table
+\end{tabular}
+\end{table}
+\end{Verbatim}
+
+
+\begin{table}[H]
+\centering
+\label{tab:mytable1}
+\caption{My Table}
+\begin{tabular}{lcc}
+  \toprule 
+  left aligned & center & center \\
+  \midrule 
+  1 & 2 & 3 \\
+  4 & 5 & 6 \\
+  \bottomrule 
+\end{tabular}
+\end{table}
+
+\subsection{Figures}
+
+To include a figure, use the \verb#\includegraphics{}# command within a \verb#figure# environment. We can use the same positioning options as we did with tables (i.e. t, b, h, or H), and include labels and captions as well. 
+
+Within the \verb#figure# environment, specify the path to the image using the \verb#\includegraphics# command, which takes in as its argument the file path (not including the file extension) \textbf{relative to where your .Rnw file is located}. In the example below, I've saved an image in a folder called ``img'', which is located in the same folder as my .Rnw file. A helpful option to this command is \verb#width#, which allows you to resize your images -- I most often specify this as a multiple of \verb#\textwidth#, which is a \LaTeX\ variable that returns the width of the text area on a page. 
+
+
+\begin{Verbatim}[frame=single]
+\begin{figure}[H]
+\centering % sets horizontal alignment to ``centered''
+\caption{A figure}
+\label{fig:myfig}
+\includegraphics[width = \textwidth]{img/puppies-cover-1280x720}
+\end{figure}
+\end{Verbatim}
+
+\begin{figure}[H]
+\centering % sets horizontal alignment to ``centered''
+\caption{A figure}
+\label{fig:myfig}
+\includegraphics[width = \textwidth]{img/puppies-cover-1280x720}
+\end{figure}
+
+Scaling to 0.3 times the textwidth: 
+
+\begin{Verbatim}[frame=single]
+\begin{figure}[H]
+\centering % sets horizontal alignment to ``centered''
+\caption{A figure, scaled}
+\label{fig:myfig}
+\includegraphics[width = 0.3\textwidth]{img/puppies-cover-1280x720}
+\end{figure}
+\end{Verbatim}
+
+\begin{figure}[H]
+\centering % sets horizontal alignment to ``centered''
+\caption{A figure, scaled}
+\label{fig:myfig}
+\includegraphics[width = 0.3\textwidth]{img/puppies-cover-1280x720}
+\end{figure}
+
+\section{Lists}
+
+Lists in \LaTeX\ can be written without any additional package, but I've found that the \verb#\enumitem# package provides some nice customization (e.g. in changing the formatting of the bullets, symbols, etc.)
+
+To start a \textbf{bulleted} list, use the \verb#itemize# environment and start each new item with the \verb#\item# command:
+
+\begin{Verbatim}[frame=single]
+\begin{itemize}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{itemize}
+\end{Verbatim}
+
+\begin{itemize}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{itemize}
+
+To start a \textbf{numbered} list, use the \verb#enumerate# environment, again starting each new item with the \verb#\item# command.
+
+\begin{Verbatim}[frame=single]
+\begin{enumerate}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+\end{Verbatim}
+
+\begin{enumerate}
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+
+To change the style of the list (for instance to use alphabetic letters instead of numbers, make specifications to the ``label'' option of \verb#enumerate#): \footnote{There are many options here, see: https://www.overleaf.com/learn/latex/lists}
+
+\begin{Verbatim}[frame=single]
+\begin{enumerate}[label = (\alph*)]
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+\end{Verbatim}
+
+\begin{enumerate}[label = (\alph*)]
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+
+
+\begin{Verbatim}[frame=single]
+\begin{enumerate}[label = (\roman*)]
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+\end{Verbatim}
+
+\begin{enumerate}[label = (\roman*)]
+\item Item 1
+\item Item 2
+\item Item 3
+\end{enumerate}
+
+Last, we can also create nested lists by nesting our enumerate or itemize environments:
+
+\begin{Verbatim}[frame=single]
+\begin{enumerate}[label = \alph*.]
+\item Item 1
+  \begin{itemize}
+    \item Nested
+  \end{itemize}
+\item Item 2
+\item Item 3
+\end{enumerate}
+\end{Verbatim}
+
+\begin{enumerate}[label = \alph*.]
+\item Item 1
+  \begin{itemize}
+    \item Nested
+  \end{itemize}
+\item Item 2
+\item Item 3
+\end{enumerate}
+
+
+\section{Overleaf}
+
+If you aren't doing anything related to \texttt{R}, and just want to typeset text using \LaTeX\ , another neat option is to do all of your writing on \href{https://www.overleaf.com}{Overleaf}, and online platform that allows you to see your changes in real time, collaborate with others in a Google-docs style editting system, and backup your projects automatically using auto-save and version control features. 
 
 
 \end{document}

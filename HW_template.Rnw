@@ -1,0 +1,50 @@
+\documentclass[10pt]{article}
+\usepackage[]{/Users/matthewlee/style}
+\usepackage[utf8]{inputenc}
+
+\pagestyle{fancy}
+\rhead{HW \# - PHS 2000A}
+
+\title{\vspace{-2cm} \textbf{HW \#}}
+\author{}
+\date{\vspace{-2cm}}
+
+\geometry{letterpaper, portrait, margin=1in}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+\Large Population Health Science 2000A
+
+\large Matt Lee, mlee8@g.harvard.edu
+\end{center}
+{}
+
+<<Options, echo=FALSE, cache=TRUE>>=
+options(width=90, tidy="true", size='small')
+library(ggplot2) 
+library(dplyr)
+library(ggsci)
+@
+
+
+Collaborators:
+
+\begin{enumerate}[leftmargin=*, label=(\arabic*)]
+
+\item Question 1 response
+
+\item Question 2 response
+
+\item Question 3 response
+
+
+\end{enumerate}
+
+
+
+
+
+\end{document}

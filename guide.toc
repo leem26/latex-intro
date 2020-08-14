@@ -8,6 +8,17 @@
 \contentsline {section}{\numberline {3}Structuring a Sweave/\LaTeX \ File}{6}{section.3}% 
 \contentsline {subsection}{\numberline {3.1}The Preamble}{6}{subsection.3.1}% 
 \contentsline {subsubsection}{\numberline {3.1.1}Style files}{8}{subsubsection.3.1.1}% 
-\contentsline {subsubsection}{\numberline {3.1.2}Other things I do in the preamble}{9}{subsubsection.3.1.2}% 
+\contentsline {subsubsection}{\numberline {3.1.2}Other things I often do in the preamble}{9}{subsubsection.3.1.2}% 
 \contentsline {subsection}{\numberline {3.2}The Document Environment}{9}{subsection.3.2}% 
-\contentsline {section}{\numberline {4}Including `R` code in your Sweave file}{10}{section.4}% 
+\contentsline {section}{\numberline {4}Including R code in your Sweave file}{10}{section.4}% 
+\contentsline {section}{\numberline {5}Typesetting math expressions}{13}{section.5}% 
+\contentsline {subsection}{\numberline {5.1}Inline mode}{13}{subsection.5.1}% 
+\contentsline {subsection}{\numberline {5.2}Display mode}{13}{subsection.5.2}% 
+\contentsline {subsection}{\numberline {5.3}Common math expressions for PHS 2000 and beyond}{15}{subsection.5.3}% 
+\contentsline {subsubsection}{\numberline {5.3.1}For regression equations}{15}{subsubsection.5.3.1}% 
+\contentsline {subsubsection}{\numberline {5.3.2}For probability distributions, likelihood functions, etc}{18}{subsubsection.5.3.2}% 
+\contentsline {section}{\numberline {6}Tables and figures}{19}{section.6}% 
+\contentsline {subsection}{\numberline {6.1}Tables}{19}{subsection.6.1}% 
+\contentsline {subsection}{\numberline {6.2}Figures}{20}{subsection.6.2}% 
+\contentsline {section}{\numberline {7}Lists}{21}{section.7}% 
+\contentsline {section}{\numberline {8}Overleaf}{23}{section.8}% 
