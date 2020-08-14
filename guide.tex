@@ -110,7 +110,7 @@ The raw files for this guide are located at \href{https://github.com/leem26/late
 
 \subsection{What is \texttt{R} Sweave?}
 
-Sweave is a system that allows us to integrate \texttt{R} code and ouput with \LaTeX\ typesetting. This has been particularly helpful for me for all of my homework assignments and working analysis documents, since I don't need to worry about remembering whether I've copied and pasted the most updated results into a word document. All I need to do is update my code (which is written directly into the Sweave .Rnw file) and re-compile it into my final PDF. 
+Sweave is a system that allows us to integrate \texttt{R} code and output with \LaTeX\ typesetting. This has been particularly helpful for me for all of my homework assignments and working analysis documents, since I don't need to worry about remembering whether I've copied and pasted the most updated results into a word document. All I need to do is update my code (which is written directly into the Sweave .Rnw file) and re-compile it into my final PDF. 
 
 \subsection{Reasons to use/not use \LaTeX\ }
 
@@ -145,7 +145,7 @@ There is a separate option tailored for \texttt{R} users called \href{https://yi
     \centering 
     \includegraphics[width = 0.85\textwidth]{img/installknitr}
   \end{figure}
-\item Create your first Sweave document! In Rstudio, go to File $\rightarrow$ New File $\rightarrow$ R Sweave
+\item Create your first Sweave document! In RStudio, go to File $\rightarrow$ New File $\rightarrow$ R Sweave
   \begin{figure}[H]
     \centering
     \includegraphics[width = 0.9 \textwidth]{img/newsweave}
@@ -172,7 +172,7 @@ Hello this is a new sweave document!
 
 \end{enumerate}
 
-Doesn't look that great, but we will follow this baseic procedure as we add to our Sweave file! You can also access some preferences for Sweave documents, like whether to preview the document after each compile, the default weave system (Sweave or knitr), and the default \LaTeX program to use to generate the PDF file, by going to Rstudio $\rightarrow$ Preferences $\rightarrow$ Sweave.
+Doesn't look that great, but we will follow this basic procedure as we add to our Sweave file! You can also access some preferences for Sweave documents, like whether to preview the document after each compile, the default weave system (Sweave or knitr), and the default \LaTeX program to use to generate the PDF file, by going to Rstudio $\rightarrow$ Preferences $\rightarrow$ Sweave.
 
 \pagebreak
 \section{Structuring a Sweave/\LaTeX\ File}
@@ -344,7 +344,7 @@ This just saves some space and makes reading the Sweave files a bit easier. Howe
 In our example preamble, there are few other commands I use that help set up the layout of the document. 
 
 \begin{itemize}
-\item \verb#\pagestyle{fancy}#: Sets the page style to ``fancy'' (draws horizontal line separating the header from the main text, and lists the current section on the left side of the header) from the \texttt{fancyhdr} pacakge.
+\item \verb#\pagestyle{fancy}#: Sets the page style to ``fancy'' (draws horizontal line separating the header from the main text, and lists the current section on the left side of the header) from the \texttt{fancyhdr} package.
 \item \verb#\rhead{A guide to \LaTeX}#: Specifies that the right side header should include the text: ``A guide to \LaTeX''
 \item \verb#\title{\vspace{2cm} \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}}#: Sets the title to \textbf{A Guide to} \LaTeX\ \textbf{ and Sweave}
 \end{itemize}
@@ -459,7 +459,7 @@ We can also use additional \texttt{R} packages with Sweave, just like with R Mar
 
 \section{Typesetting math expressions}
 
-If you're typsetting anything with math, it's usually prudent to load the following packages either in your preamble or a separate style file:
+If you're typesetting anything with math, it's usually prudent to load the following packages either in your preamble or a separate style file:
 
 \begin{itemize}
 \item \verb#\usepackage{amsmath}#
@@ -472,7 +472,7 @@ If you're typsetting anything with math, it's usually prudent to load the follow
 
 There are a number of ways to include math expressions in Sweave/\LaTeX. To include an expression ``inline'', i.e. in the line that you are writing in, surround the expression in single dollar signs (\$...\$). 
 
-For example, ``\verb#$E(Y \mid X) = \beta_0 + \beta_1 X$# is a regression model'' will be typset as ``$E(Y \mid X) = \beta_0 + \beta_1 X$ is a regression model''
+For example, ``\verb#$E(Y \mid X) = \beta_0 + \beta_1 X$# is a regression model'' will be typeset as ``$E(Y \mid X) = \beta_0 + \beta_1 X$ is a regression model''
 
 \subsection{Display mode}
 
@@ -811,7 +811,7 @@ Integrals can be written using the \verb#\int# command:
 
 There are many ways to typeset tables. Here, we present one method using the \verb#tabular# environment. To start a table, place a \verb#tabular# environment inside a \verb#table# environment, which allows \LaTeX\ to keep track of tables in your document. Within the \verb#table# environment, you can also specify a label and caption, as well as horizontal alignment. 
 
-To specify where the table appears on the page, pass the \textit{placement specifier} option to \verb#\begin{table}#. For example, \verb#\begin{table}[t]# places the table at the top of the page, \verb#\begin{table}[b]# places the table at the bottom, \verb#\begin{table}[h]# places the table \textbf{approximately} where you've written the table, and \verb#\begin{table}[H]# places the table \textbf{exactly} where you've written the table. \marginnote{\textit{In most cases, I use the ``H'' option for table positioning, since I generally want my tables to appear directly next to the relevent text.}}[-1cm]
+To specify where the table appears on the page, pass the \textit{placement specifier} option to \verb#\begin{table}#. For example, \verb#\begin{table}[t]# places the table at the top of the page, \verb#\begin{table}[b]# places the table at the bottom, \verb#\begin{table}[h]# places the table \textbf{approximately} where you've written the table, and \verb#\begin{table}[H]# places the table \textbf{exactly} where you've written the table. \marginnote{\textit{In most cases, I use the ``H'' option for table positioning, since I generally want my tables to appear directly next to the relevant text.}}[-1cm]
 
 Within the \verb#table# environment, the actual contents of your table will go in the \verb#tabular# environment. Column alignment is specified in a second set of curly braces directly following the \verb#\begin{tabular}# command, and you must specify ``l'' (left), ``r'' (right), or ``c'' (centered) for each column in your table. In the \verb#tabular# environment, separate rows with \verb#\\# and columns with ``\&''. 
 
@@ -871,7 +871,7 @@ Within the \verb#figure# environment, specify the path to the image using the \v
 \includegraphics[width = \textwidth]{img/puppies-cover-1280x720}
 \end{figure}
 
-Scaling to 0.3 times the textwidth: 
+Scaling to 0.3 times the text width: 
 
 \begin{Verbatim}[frame=single]
 \begin{figure}[H]
@@ -981,7 +981,7 @@ Last, we can also create nested lists by nesting our enumerate or itemize enviro
 
 \section{Overleaf}
 
-If you aren't doing anything related to \texttt{R}, and just want to typeset text using \LaTeX\ , another neat option is to do all of your writing on \href{https://www.overleaf.com}{Overleaf}, and online platform that allows you to see your changes in real time, collaborate with others in a Google-docs style editting system, and backup your projects automatically using auto-save and version control features. 
+If you aren't doing anything related to \texttt{R}, and just want to typeset text using \LaTeX\ , another neat option is to do all of your writing on \href{https://www.overleaf.com}{Overleaf}, and online platform that allows you to see your changes in real time, collaborate with others in a Google-docs style editing system, and backup your projects automatically using auto-save and version control features. 
 
 
 \end{document}
